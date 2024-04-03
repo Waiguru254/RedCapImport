@@ -8,13 +8,17 @@ RedImportDateLimited <- function(token , url, days = NULL, columns = NULL) {
   }
 
   ### Aliging the columns
-  fields <- c()
-  for (i in seq_along(columns)) {
-    if (i == 1) {
-      fields[paste0("fields[0]", sep = '')] <- columns[i]
-    } else {
-      fields[paste0("fields[", i - 1, "]")] <- columns[i]
-    }
+  if (!is.null(columns)) {
+      fields <- c()
+      for (i in seq_along(columns)) {
+        if (i == 1) {
+          fields[paste0("fields[0]", sep = '')] <- columns[i]
+        } else {
+          fields[paste0("fields[", i - 1, "]")] <- columns[i]
+        }
+      }
+  } else {
+    fields <- c()
   }
   ### Download the data 
   formData <- c(as.list(fields),list("token"= token,
